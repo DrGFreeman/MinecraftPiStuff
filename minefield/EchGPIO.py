@@ -3,6 +3,8 @@ from gpiozero import LED
 import threading
 import time
 
+from buzzLevel import BuzzLevel
+
 
 class EchBVJR:
 
@@ -19,25 +21,32 @@ class EchBVJR:
         self.ledV = LED(27) # LED verte sur pin 27
         self.ledJ = LED(22) # LED jaune sur pin 22
         self.ledR = LED(16) # LED rouge sur pin 16
+        self.buzzer = BuzzLevel()
 
     def onVal(self, val):
+        level = 0
         if val <= self.sB:
             self.b = True
+            level = 1
         else:
             self.b = False
         if val <= self.sV:
             self.v = True
+            level = 2
         else:
             self.v = False
         if val <= self.sJ:
             self.j = True
+            level = 3
         else:
             self.j = False
         if val <= self.sR:
             self.r = True
+            level = 4
         else:
             self.r = False
         self.appliquer()
+        self.buzzer.setLevel(level)
 
     def off(self):
         self.b = False
@@ -45,6 +54,7 @@ class EchBVJR:
         self.j = False
         self.r = False
         self.appliquer()
+        self.buzzer.setLevel(0)
 
     def blinkVal(self, val, freq): # Clignotement de l'echelle
         self.blink = True
