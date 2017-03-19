@@ -165,6 +165,7 @@ try:
                 mc.setBlock(base.x, base.y, base.z, block.GLOWING_OBSIDIAN) # On remet le bloc à la base
 
     # Fin du jeu
+    ech.buzzer.stop()
     if not vivant: # Cas où le joueur est mort
         explosion(mc, 3) # Explosion à la position du joueur
         mc.postToChat("BOUM!!!")
